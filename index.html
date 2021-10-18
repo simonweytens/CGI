@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Json Table</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+    <h1>Movies</h1>
+    <div class="col-sm-6">
+        <table class="table">
+            <thead>
+                <tr><th>Title</th><th>Description</th><th>Length</th></tr>
+            </thead>
+            <tbody id="movieTable">
+
+            </tbody>
+        </table>
+    </div>
+    <div class="col-sm-6">
+        <form  action="http://raspberrypi.local/cgi-bin/CGI-Server">
+            <input name="m" type="text">
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+    </div>
+</body>
+</html>
+<script>
+    fetch('records.json')
+    .then(res => res.json())
+    .then(json => {
+      
+        var movieTable = document.getElementById('movieTable')
+        var desc
+        var name
+        var len
+        var body = document.querySelector('body')
+        //console.log(json.movies.Titles.length)
+        for(var i = 0; i < json.movies.Titles.length; i++){
+            var tableRow = document.createElement('tr')
+            name = json.movies.Titles[i]
+            desc = json.movies.Description[i]
+            len = json.movies.Length[i]
+            tableRow.innerHTML = `<td>${name}</td><td>${desc}</td><td>${len}</td>`
+            movieTable.appendChild(tableRow)
+        }
+    })
+    fetch('http://raspberrypi.local/cgi-bin/test.json')
+    .then(res => res.json())
+    .then(json => {
+        console.log(json)
+    })
+</script>
