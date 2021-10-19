@@ -3,11 +3,7 @@
 #include <json-c/json.h>
 #include <time.h>
 
-#define MAXLEN 80
-#define EXTRA 5
-/* 4 for field name "data", 1 for "=" */
-#define MAXINPUT MAXLEN + EXTRA + 2
-
+#define DATAFILE "/var/www/html/test.json"
 // void unencode(char *src, char *last, char *dest)
 // {
 //  for(; src != last; src++, dest++)
@@ -27,9 +23,8 @@
 int main(void)
 {
   char *querystr;
-  FILE *fp;
 
-  fp = fopen("test.json", "w");
+  FILE *fp = fopen(DATAFILE, "w");
 
   printf("%s%c%c\n",
          "Content-Type:text/html;charset=iso-8859-1", 13, 10);
@@ -58,7 +53,7 @@ int main(void)
   json_object_array_add(jarray, jstring1);
   json_object_object_add(jobj, "posts", jarray);
 
-  printf("The json object created: %sn", json_object_to_json_string(jobj));
+  printf("Post succesfully send!");
   fprintf(fp, "%s", json_object_to_json_string(jobj));
   fclose(fp);
   return 0;

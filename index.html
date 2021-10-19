@@ -18,8 +18,12 @@
             <tbody id="movieTable">
 
             </tbody>
+            <tbody id="postsTable">
+
+            </tbody>
         </table>
     </div>
+   
     <div class="col-sm-6">
         <form  action="http://raspberrypi.local/cgi-bin/CGI-Server">
             <input name="m" type="text">
@@ -49,9 +53,17 @@
             movieTable.appendChild(tableRow)
         }
     })
-    fetch('http://raspberrypi.local/cgi-bin/test.json')
+    fetch('test.json')
     .then(res => res.json())
     .then(json => {
         console.log(json)
+        var postsTable = document.getElementById('postsTable')
+        var post
+        for(var i = 0; i < json.posts.length; i++){
+            var tablerow = document.createElement('tr')
+            post = json.posts[i]
+            tablerow.innerHTML = `<td>${post}</td>`
+            movieTable.appendChild(tablerow)
+        }
     })
 </script>
